@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Generador</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Quicksand&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      background: linear-gradient(135deg, #96bb7c, #558b2f);
+      font-family: 'Quicksand', sans-serif;
+      color: #fffffb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background-color: #466d1d;
+      padding: 3rem 4rem;
+      border-radius: 32px;
+      box-shadow: 0 20px 45px rgba(69, 101, 38, 0.9);
+      text-align: center;
+      max-width: 420px;
+      width: 90%;
+    }
+    p {
+      font-size: 3.8rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      margin-bottom: 3.5rem;
+      user-select: all;
+      text-shadow: 0 0 10px #72b343cc;
+    }
+    a {
+      background-color: #aed581;
+      color: #2E4600;
+      padding: 1.2rem 3rem;
+      font-weight: 700;
+      font-size: 1.2rem;
+      border-radius: 30px;
+      text-decoration: none;
+      box-shadow: 0 0 15px #b9f6cacc;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+      display: inline-block;
+    }
+    a:hover, a:focus {
+      background-color: #c5e1a5;
+      box-shadow: 0 0 35px #dceda8cc;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <p th:text="${codigoFinal}"></p>
+    <a th:href="@{/}" aria-label="Volver al formulario principal">Regresar</a>
+  </div>
+</body>
+</html>
