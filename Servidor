@@ -1,0 +1,57 @@
+package com.example.demo;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+@Controller
+public class Servidor {
+
+    @GetMapping("/")
+    public String mostrarPantallaIngreso() {
+        return "entradaClave"; 
+    }
+
+    @PostMapping("/validar")
+    public String procesarClave(
+            @RequestParam(name = "nombre", required = false) String nombre,
+            @RequestParam(name = "apellido", required = false) String apellido,
+            @RequestParam(name = "fechaNacimiento", required = false) String fechaNacimiento,
+            Model modelo) {
+
+        String nombreReal = (nombre == null || nombre.trim().isEmpty()) ? "NN" : nombre.trim();
+        String apellidoReal = (apellido == null) ? "" : apellido.trim();
+
+        LocalDate fecha;
+        try {
+            fecha = (fechaNacimiento == null || fechaNacimiento.trim().isEmpty()) ?
+                    LocalDate.of(1900, 1, 1) :
+                    LocalDate.parse(fechaNacimiento, DateTimeFormatter.ISO_DATE);
+        } catch (Exception e) {
+            fecha = LocalDate.of(1900, 1, 1);
+        }
+
+        String codigoFinal = formarCodigo(nombreReal, apellidoReal, fecha);
+        modelo.addAttribute("codigoFinal", codigoFinal);
+
+        return "salidaClave"; 
+    }
+
+    private String formarCodigo(String nombre, String apellido, LocalDate fecha) {
+
+        String pn = nombre.length() >= 2 ? nombre.substring(0, 2).toUpperCase() :
+                nombre.toUpperCase();
+        String pa = apellido.isEmpty() ? "Z" : apellido.substring(0, 1).toUpperCase();
+
+        String anio = String.valueOf(fecha.getYear());
+        String mes = String.format("%02d", fecha.getMonthValue());
+        String dia = String.format("%02d", fecha.getDayOfMonth());
+
+
+        return pa + "-" + pn + "-" +
+                anio.substring(2) + mes + dia;  // ej: A-MA-251107
+    }
+}
